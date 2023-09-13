@@ -10,19 +10,7 @@ namespace Jungle
     {
         public static ScoreController instance;
         public TMP_Text scoreText;
-        private int _score;
-        private int score
-        {
-            get
-            {
-                return _score;
-            }
-            set
-            {
-                _score = value;
-                scoreText.text = "SCORE\n" + _score.ToString();
-            }
-        }
+        private static int score;
         private void Awake()
         {
             instance = this;
@@ -30,6 +18,14 @@ namespace Jungle
         public void IncreaseScore(int val)
         {
             score += val;
+        }
+        public void ResetScore()
+        {
+            score = 0;
+        }
+        private void Update()
+        {
+            scoreText.text = "SCORE\n" + score.ToString();
         }
     }
 }

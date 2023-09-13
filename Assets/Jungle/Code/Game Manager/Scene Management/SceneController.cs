@@ -23,7 +23,7 @@ namespace Jungle
                 return;
             }
 
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         // From title screen to game
@@ -39,13 +39,9 @@ namespace Jungle
             {
                 yield break;
             }
-
-            AsyncOperation load = SceneManager.LoadSceneAsync(sceneIndex);
-            while (load.progress < 0.9f)
-            {
-                // Wait until load happens
-            }
+            
             StageDisplayController.SetCurrLevel("Stage 1");
+            SceneManager.LoadScene(SceneList.GetLevel(1));
         }
 
         // From level to level
@@ -61,18 +57,14 @@ namespace Jungle
                 yield break;
             }
 
-            AsyncOperation load = SceneManager.LoadSceneAsync(sceneIndex);
-            while (load.progress < 0.9f)
-            {
-                // Wait until load happens
-            }
-
             StageDisplayController.SetCurrLevel("Stage " + level.ToString());
+            SceneManager.LoadScene(SceneList.GetLevel(level));
         }
 
         // From level to game over / start of game
         public void BackToStart()
         {
+            ScoreController.instance.ResetScore();
             StartCoroutine(LoadStart());
         }
 
@@ -84,11 +76,7 @@ namespace Jungle
                 yield break;
             }
 
-            AsyncOperation load = SceneManager.LoadSceneAsync(sceneIndex);
-            while (load.progress < 0.9f)
-            {
-                // Wait until load happens
-            }
+            SceneManager.LoadSceneAsync(SceneList.GetTitle());
         }
     }
 }

@@ -13,10 +13,12 @@ namespace Jungle
 
         // Timers
         private float speedupTimer;
+        private float invulTimer;
 
         // Constants
         const float SPEEDUP_DURATION = 5f;
         const float SPEEDUP_MULTIPLIER = 1.5f;
+        const float INVUL_DURATION = 5f;
 
         private void Awake()
         {
@@ -27,8 +29,9 @@ namespace Jungle
         {
             moveController = GetComponent<CharacterMoveController>();
 
-            // Speed
+            // Timers
             speedupTimer = 0;
+            invulTimer = 0;
         }
 
         private void Update()
@@ -42,6 +45,16 @@ namespace Jungle
                 speedupTimer = 0;
                 EndSpeedBoost();
             }
+
+            if (invulTimer > 0)
+            {
+                invulTimer -= Time.deltaTime;
+            }
+            else
+            {
+                invulTimer = 0;
+                GetComponent<SpriteRenderer>().color = Color.red; // DEBUG
+            }
         }
 
         public void OnSpeedBoost()
@@ -52,6 +65,17 @@ namespace Jungle
         public void EndSpeedBoost()
         {
             moveController.ResetSpeed();
+        }
+
+        public void OnInvulnerability()
+        {
+            invulTimer = INVUL_DURATION;
+            GetComponent<SpriteRenderer>().color = Color.yellow; // DEBUG
+        }
+
+        public bool IsInvulnerable()
+        {
+            return invulTimer > 0;
         }
     }
 }

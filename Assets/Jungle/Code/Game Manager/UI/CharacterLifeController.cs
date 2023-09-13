@@ -51,10 +51,6 @@ namespace Jungle
         private void Update()
         {
             lifeCountText.text = "x " + currPlayerLives.ToString();
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                DecreaseLives(1);
-            }
         }
     }
 }
